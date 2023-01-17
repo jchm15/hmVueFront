@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import Home from '@/components/HelloWorld.vue';
+import Event from "@/components/EventHandling.vue"
 import List from '@/components/ListSample.vue';
 import If from '@/components/IfSample.vue';
 import Parent from '@/components/props/ParentComponent.vue';
@@ -14,6 +15,11 @@ const routes = [
         path: "/",
         name: "home",
         component: Home,
+    },
+    {
+        path: "/eventHandler",
+        name: "eventHandler",
+        component: Event,
     },
     {
         path: "/list",

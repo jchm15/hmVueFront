@@ -3,8 +3,8 @@
         <h1>Watch Sample</h1>
         <hr/>
         <div>
-            <button @click="increaseNum">Increase</button>
-            <button @click="decreaseNum">Decrease</button>
+            <button @click="increaseNum" :disabled="increaseDisabled">Increase</button>
+            <button @click="decreaseNum" :disabled="decreaseDisabled">Decrease</button>
         </div>
         <h2>{{ intA }} {{ this.strMessage }}</h2>
     </div>
@@ -17,14 +17,21 @@ export default {
         return {
             intA: 0,
             strMessage: "",
+
+            increaseDisabled: false,
+            decreaseDisabled: false,
         }
     },
     methods: {
         increaseNum() {
             this.intA++;
+            this.increaseDisabled = this.intA >= 5;
+            this.decreaseDisabled = false;
         },
         decreaseNum() {
             this.intA--;
+            this.decreaseDisabled = this.intA <= -5;
+            this.increaseDisabled = false;
         },
     },
     watch: {

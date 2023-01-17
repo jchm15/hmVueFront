@@ -4,6 +4,7 @@
 <!--    </div>-->
     <nav id="mynav" style="flex-direction: row;" class="nav">
         <router-link to="/">Home</router-link>  |
+        <router-link to="/eventHandler">Event Handler </router-link>  |
         <router-link to="/list">v-for </router-link>  |
         <router-link to="/if">v-if</router-link>  |
         <router-link to="/props">Parent-Children</router-link>  |
