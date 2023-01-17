@@ -23,7 +23,7 @@ export default {
             clock: {
                 interval: null,
                 time: null,
-            }
+            },
         }
     },
     created() {
@@ -33,7 +33,7 @@ export default {
     },
     mounted() {
 
-    }
+    },
 }
 </script>
 
