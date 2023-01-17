@@ -1,10 +1,12 @@
 <template>
-$END$
+    <h1>
+        True
+    </h1>
 </template>
 
 <script>
 export default {
-name: "vIfTrue"
+    name: "vIfTrue"
 }
 </script>
 
