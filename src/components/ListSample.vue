@@ -17,7 +17,7 @@
 
 <script>
 export default {
-    name: "List",
+    name: "ListSample",
     data() {
         return {
             listInfo: {},
@@ -31,8 +31,8 @@ export default {
             //     }
             // });
 
-            let randomNum = Math.floor(Math.random() * 4 + 1);
-            this.$store.dispatch("refreshList", randomNum).then(resp => {
+            let randomNum = Math.floor(Math.random() * 4 + 1,);
+            this.$store.dispatch("refreshList", randomNum,).then(resp => {
                 if(resp.data.status === 'success') {
                     this.listInfo = resp.data.message;
                 }
@@ -40,7 +40,7 @@ export default {
         },
         async refreshList() {
             await this.getList();
-        }
+        },
     },
     async mounted() {
         await this.getList();

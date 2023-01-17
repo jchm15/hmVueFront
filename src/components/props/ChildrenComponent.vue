@@ -16,21 +16,25 @@ export default {
     props: {
         title: {
             type: String,
-            default: "Default Title"
+            default: "Default Title",
         },
         desc: {
             type: String,
-            default: "Default Desc"
+            default: "Default Desc",
         },
         titleStyle: {
             type: Object,
-            default: {},
+            default: () => {
+                return {}
+            },
         },
         descStyle: {
             type: Object,
-            default: {},
-        }
-    }
+            default: () => {
+                return {}
+            },
+        },
+    },
 }
 </script>
 

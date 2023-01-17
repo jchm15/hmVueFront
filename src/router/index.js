@@ -1,13 +1,13 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter, } from "vue-router";
 
 import Home from '@/components/HelloWorld.vue';
-import List from '@/components/List.vue';
-import If from '@/components/If.vue';
+import List from '@/components/ListSample.vue';
+import If from '@/components/IfSample.vue';
 import Parent from '@/components/props/ParentComponent.vue';
 import LifeCycle from "@/components/LifeCycle.vue";
-import Computed from "@/components/Computed.vue";
-import Watch from "@/components/Watch.vue";
-import Error from '@/components/Error.vue';
+import Computed from "@/components/ComputedSample.vue";
+import Watch from "@/components/WatchSample.vue";
+import Error from '@/components/ErrorSample.vue';
 
 const routes = [
     {
@@ -48,13 +48,13 @@ const routes = [
     {
         path : "/:pathMatch(.*)",
         name : "not-found",
-        component : Error
-    }
+        component : Error,
+    },
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
-});
+},);
 
 export default router;

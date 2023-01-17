@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: "Computed",
+    name: "ComputedSample",
     data() {
         return {
             str1: "",
@@ -21,7 +21,7 @@ export default {
         concat() {
             return `${this.str1} ${this.str2}`
         },
-    }
+    },
 }
 </script>
 

@@ -16,7 +16,7 @@ import Child from '@/components/props/ChildrenComponent.vue'
 export default {
     name: "ParentComponent",
     components: {
-        Child
+        Child,
     },
     data() {
         return {
@@ -25,13 +25,13 @@ export default {
                     color: '#3300FF',
                 },
                 descStyle: {
-                    color: '#FF9999'
+                    color: '#FF9999',
                 },
                 title: "Children - 타이틀이당",
-                desc: "Children - 설명이당"
-            }
+                desc: "Children - 설명이당",
+            },
         }
-    }
+    },
 }
 </script>
 

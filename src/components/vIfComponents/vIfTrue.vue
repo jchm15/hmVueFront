@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "vIfTrue"
+    name: "vIfTrue",
 }
 </script>
 

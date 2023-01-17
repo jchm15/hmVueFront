@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: "Watch",
+    name: "WatchSample",
     data() {
         return {
             intA: 0,
@@ -28,7 +28,7 @@ export default {
         },
     },
     watch: {
-        intA(newVal, oldVal) {
+        intA(newVal, oldVal,) {
             if(newVal === 0) {
                 this.strMessage = "";
                 return;
@@ -38,8 +38,8 @@ export default {
             } else {
                 this.strMessage = "decrease"
             }
-        }
-    }
+        },
+    },
 }
 </script>
 

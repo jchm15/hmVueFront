@@ -14,7 +14,7 @@ import VifTrue from '@/components/vIfComponents/vIfTrue.vue';
 import VifFalse from '@/components/vIfComponents/vIfFalse.vue';
 
 export default {
-    name: "If",
+    name: "IfSample",
     data() {
         return {
             toggle: true,
@@ -27,8 +27,8 @@ export default {
     methods: {
         changeComponents() {
             this.toggle = !this.toggle;
-        }
-    }
+        },
+    },
 }
 </script>
 
