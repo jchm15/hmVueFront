@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter, } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 
 import Home from '@/components/HelloWorld.vue';
 import List from '@/components/ListSample.vue';
@@ -55,6 +55,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-},);
+});
 
 export default router;

@@ -28,7 +28,7 @@ export default {
         },
     },
     watch: {
-        intA(newVal, oldVal,) {
+        intA(newVal, oldVal) {
             if(newVal === 0) {
                 this.strMessage = "";
                 return;

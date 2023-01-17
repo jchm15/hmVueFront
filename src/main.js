@@ -1,4 +1,4 @@
-import { createApp, } from 'vue'
+import { createApp } from 'vue'
 import App from '@/App.vue'
 
 import axios from "axios";
@@ -8,12 +8,12 @@ import dayjs from "dayjs";
  * dayjs 기본언어 ko 세팅
  * */
 import 'dayjs/locale/ko';
-dayjs.locale('ko',);
+dayjs.locale('ko');
 
 import store from '@/store'
 import router from '@/router'
 
-const app = createApp(App,);
+const app = createApp(App);
 
 /**
  * 전역변수 화
@@ -23,7 +23,7 @@ app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$dayjs = dayjs
 
 app
-    .use(store,)
-    .use(router,)
+    .use(store)
+    .use(router)
 
-app.mount('#app',)
+app.mount('#app')
