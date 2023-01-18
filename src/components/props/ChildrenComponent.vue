@@ -1,7 +1,7 @@
 <template>
     <div style="margin: 10px; border: dotted gray;">
         <h2>
-           Childrent Section
+           Children Section
         </h2>
         <div>
             <h2 :style="titleStyle">{{ title }}</h2>
