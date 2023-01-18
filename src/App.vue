@@ -11,6 +11,7 @@
         <router-link to="/lifeCycle">Life Cycle</router-link>  |
         <router-link to="/computed">Computed</router-link>  |
         <router-link to="/watch">Watch</router-link>  |
+        <router-link :to="`/bind/${dynamicRouter}`">Dynamic Router</router-link>  |
         <router-link to="/errorPage">Error</router-link>
     </nav>
     <router-view />
@@ -21,6 +22,7 @@ export default {
     name: 'App',
     data() {
         return {
+            dynamicRouter: 'vue-router Sample',
             clock: {
                 interval: null,
                 time: null,

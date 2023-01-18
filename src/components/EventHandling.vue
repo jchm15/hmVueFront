@@ -57,8 +57,8 @@ export default {
         },
         keyupEnter(e) {
             this.str = e.target.value;
-        }
-    }
+        },
+    },
 }
 </script>
 

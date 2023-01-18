@@ -8,6 +8,7 @@ import Parent from '@/components/props/ParentComponent.vue';
 import LifeCycle from "@/components/LifeCycle.vue";
 import Computed from "@/components/ComputedSample.vue";
 import Watch from "@/components/WatchSample.vue";
+import Bind from '@/components/DynamicBinding.vue';
 import Error from '@/components/ErrorSample.vue';
 
 const routes = [
@@ -50,6 +51,11 @@ const routes = [
         path: "/watch",
         name: "watch",
         component: Watch,
+    },
+    {
+        path: "/bind/:message",
+        name: "bind",
+        component: Bind,
     },
     {
         path : "/:pathMatch(.*)",
