@@ -15,6 +15,10 @@ export default {
             data: null,
         }
     },
+    create() {
+        let obj = {};
+        obj.id = 1;
+    },
     methods: {
         async getList() {
             this.list = await this.$axios.get("http://localhost:3000/hm");
