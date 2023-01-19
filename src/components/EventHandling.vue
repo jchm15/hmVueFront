@@ -40,8 +40,8 @@ export default {
         }
     },
     methods: {
-        click() {
-            alert("click")
+        async click() {
+            alert("click");
         },
         clickWithParam(data) {
             alert(data);
