@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Open API</h1>
         <button @click="add">Add Data</button>
         <button @click="patch">Modify Data</button>
         <button @click="remove" :disabled="list.length === 0">Remove Data</button>

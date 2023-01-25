@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Composition API</h1>
         <button @click="add">Add Data</button>
         <button @click="patch">Modify Data</button>
         <button @click="remove" :disabled="list.length === 0">Remove Data</button>
@@ -22,7 +23,7 @@
  * app.provide('$axios', axios);
  *
  * */
-import {inject, ref, onMounted, computed} from "vue";
+import {inject, ref, onMounted} from "vue";
 export default {
     name: "JsonServer2",
     setup() {
