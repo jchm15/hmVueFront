@@ -2,12 +2,15 @@
     <div>
         <button @click="add">Add Data</button>
         <button @click="patch">Modify Data</button>
-        <button @click="remove">Remove Data</button>
+        <button @click="remove" :disabled="list.length === 0">Remove Data</button>
 
         <template v-if="list.length">
             <div v-for="(item, index) in list" :key="index">
                 <span>Id : {{ item.id }}  |  Name : {{ item.name }}  {{ item.desc ? `  |  Desc : ${item.desc}` : '' }}</span>
             </div>
+        </template>
+        <template v-else>
+            <div>No Data</div>
         </template>
     </div>
 </template>
