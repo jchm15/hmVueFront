@@ -27,6 +27,8 @@
  *
  * */
 import {inject, ref, reactive, onMounted} from "vue";
+import {fnSample} from "@/utils/composition_test"
+
 export default {
     name: "JsonServer2",
     setup() {
@@ -35,7 +37,7 @@ export default {
         let list = ref([]);
         let ref_data = ref('');
         let reactive_data = reactive({});
-
+        let exportFn_data = ref(fnSample(100,2));
 
         /**
          * ref => 모든 데이터 형에 적용 가능, 변수명.value 로 접근
@@ -100,16 +102,10 @@ export default {
         };
 
         onMounted(() => {
-            console.log("Composition API Sample")
-
-            ref_data.value = "ref value";
-            reactive_data.value = "reactive_data";
-
-            console.log(ref_data, reactive_data)
             getList();
         });
 
-        return { url, list, getList, add, patch, remove, ref_data, reactive_data };
+        return { url, list, getList, add, patch, remove, ref_data, reactive_data, exportFn_data };
     }
 
     // data() {
