@@ -14,11 +14,18 @@ import store from '@/store'
 import router from '@/router'
 
 const app = createApp(App);
+
+/**
+ * 전역변수 화
+ * 각 컴포넌트 내에서 inject import -> inject(key)으로 inject
+ * Composition API
+ * */
 app.provide('$axios', axios);
 
 /**
  * 전역변수 화
  * this.$[alias]로 호출
+ * Options API
  * */
 app.config.globalProperties.$axios = axios;
 app.config.globalProperties.$dayjs = dayjs

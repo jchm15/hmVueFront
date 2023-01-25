@@ -22,9 +22,9 @@
 <script>
 /**
  * ---inject---
- * composition API 사용 시 main.js에서 세팅
+ * composition API 사용 시 main.js에서 라이브러리를 provide 함수로 (key: value) 형식으로 명시하여 제공
  * app.provide('$axios', axios);
- *
+ * 사용할 라이브러리는 컴포넌트 내에서 inject import 후 provide 함수로 명시한 key 값으로 의존성 inject
  * */
 import {inject, ref, reactive, onMounted} from "vue";
 import {fnSample} from "@/utils/composition_test"
