@@ -14,6 +14,7 @@ import store from '@/store'
 import router from '@/router'
 
 const app = createApp(App);
+app.provide('$axios', axios);
 
 /**
  * 전역변수 화

@@ -10,6 +10,7 @@ import Computed from "@/components/ComputedSample.vue";
 import Watch from "@/components/WatchSample.vue";
 import Bind from '@/components/DynamicBinding.vue';
 import JsonServer from '@/components/jsonServerSample/JsonServer.vue';
+import JsonServer2 from '@/components/jsonServerSample/JsonServer_setup.vue';
 import Error from '@/components/ErrorSample.vue';
 
 const routes = [
@@ -62,6 +63,11 @@ const routes = [
         path: "/jsonServer",
         name: "jsonServer",
         component: JsonServer
+    },
+    {
+        path: "/jsonServer2",
+        name: "jsonServer2",
+        component: JsonServer2
     },
     {
         path : "/:pathMatch(.*)",

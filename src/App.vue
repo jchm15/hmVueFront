@@ -13,6 +13,7 @@
         <router-link to="/watch">Watch</router-link>  |
         <router-link :to="`/bind/${dynamicRouter}`">Dynamic Router</router-link>  |
         <router-link to="/jsonServer">Json-Server</router-link>  |
+        <router-link to="/jsonServer2">Json-Server2</router-link>  |
         <router-link to="/errorPage">Error</router-link>
     </nav>
     <router-view />
