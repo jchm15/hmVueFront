@@ -3,6 +3,12 @@
         <button @click="add">Add Data</button>
         <button @click="patch">Modify Data</button>
         <button @click="remove">Remove Data</button>
+
+        <template v-if="list.length">
+            <div v-for="(item, index) in list" :key="index">
+                <span>Id : {{ item.id }}  |  Name : {{ item.name }}  {{ item.desc ? `  |  Desc : ${item.desc}` : '' }}</span>
+            </div>
+        </template>
     </div>
 </template>
 
@@ -11,41 +17,48 @@ export default {
     name: "JsonServer",
     data() {
         return {
-            list: null,
-            data: null,
+            url: `http://localhost:3000`,
+            list: [],
         }
     },
     methods: {
         async getList() {
-            this.list = await this.$axios.get("http://localhost:3000/hm");
+            let rtn = await this.$axios.get(`${this.url}/sample`);
+
+            if(rtn.status === 200) {
+                this.list = rtn.data;
+            }
         },
         async add() {
-            await this.getList();
-
             let data = {
-                id: this.list.data.length+1
+                id: this.list.length+1,
+                name: `sample${this.list.length+1}`
             }
-            await this.$axios.post(`http://localhost:3000/hm`, data);
+            await this.$axios.post(`${this.url}/sample`, data);
+
+            await this.getList();
         },
         async patch() {
-            await this.getList();
-
             let data = {
                 desc: "patch"
             }
-            await this.$axios.patch(`http://localhost:3000/hm/${this.list.data.length}`, data);
+
+            await this.$axios.patch(`${this.url}/sample/${this.list.length}`, data);
+
+            await this.getList();
         },
         async remove() {
-            await this.getList();
-            if(this.list.data.length === 0) {
+            if(this.list.length === 0) {
                 alert("No Data")
             } else {
-                await this.$axios.delete(`http://localhost:3000/hm/${this.list.data.length}`);
+                await this.$axios.delete(`${this.url}/sample/${this.list.length}`);
+
+                await this.getList();
             }
         }
     },
-    async created() {
-
+    async mounted() {
+        await this.getList();
     }
 }
 </script>
