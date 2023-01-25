@@ -5,6 +5,9 @@
         <button @click="patch">Modify Data</button>
         <button @click="remove" :disabled="list.length === 0">Remove Data</button>
 
+        <p>{{ ref_data }}</p>
+        <p>{{ reactive_data.value }}</p>
+
         <template v-if="list.length">
             <div v-for="(item, index) in list" :key="index">
                 <span>Id : {{ item.id }}  |  Name : {{ item.name }}  {{ item.desc ? `  |  Desc : ${item.desc}` : '' }}</span>
@@ -23,13 +26,21 @@
  * app.provide('$axios', axios);
  *
  * */
-import {inject, ref, onMounted} from "vue";
+import {inject, ref, reactive, onMounted} from "vue";
 export default {
     name: "JsonServer2",
     setup() {
         const $axios = inject('$axios');
         let url = `http://localhost:3000`;
         let list = ref([]);
+        let ref_data = ref('');
+        let reactive_data = reactive({});
+
+
+        /**
+         * ref => 모든 데이터 형에 적용 가능, 변수명.value 로 접근
+         * reactive => object, array 이외 사용 불가, 변수명.field 로 접근
+         * */
 
 
 
@@ -46,7 +57,13 @@ export default {
                 id: list.value.length+1,
                 name: `sample${list.value.length+1}`
             }
-            await $axios.post(`${url}/sample`, data);
+            try {
+                await $axios.post(`${url}/sample`, data);
+                ref_data.value = "Execute Add"
+                reactive_data.value = "Complete Add";
+            } catch(e) {
+                alert("add error")
+            }
 
             await getList();
         };
@@ -56,8 +73,13 @@ export default {
                 desc: "patch"
             }
 
-            await $axios.patch(`${url}/sample/${list.value.length}`, data);
-
+            try {
+                await $axios.patch(`${url}/sample/${list.value.length}`, data);
+                ref_data.value = "Execute Patch"
+                reactive_data.value = "Complete Patch";
+            } catch (e){
+                alert("patch error")
+            }
             await getList();
         };
 
@@ -65,7 +87,13 @@ export default {
             if (list.value.length === 0) {
                 alert("No Data")
             } else {
-                await $axios.delete(`${url}/sample/${list.value.length}`);
+                try {
+                    await $axios.delete(`${url}/sample/${list.value.length}`);
+                    ref_data.value = "Execute Remove"
+                    reactive_data.value = "Complete Remove";
+                } catch(e) {
+                    alert("remove error")
+                }
 
                 await getList();
             }
@@ -73,10 +101,15 @@ export default {
 
         onMounted(() => {
             console.log("Composition API Sample")
+
+            ref_data.value = "ref value";
+            reactive_data.value = "reactive_data";
+
+            console.log(ref_data, reactive_data)
             getList();
         });
 
-        return { url, list, getList, add, patch, remove };
+        return { url, list, getList, add, patch, remove, ref_data, reactive_data };
     }
 
     // data() {
