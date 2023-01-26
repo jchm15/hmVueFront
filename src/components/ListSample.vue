@@ -20,11 +20,11 @@ export default {
     name: "ListSample",
     data() {
         return {
-            listInfo: {},
+            listInfo: [],
         }
     },
     methods: {
-        getList() {
+        async getList() {
             // this.$axios.get(`https://jsonplaceholder.typicode.com/todos`).then(resp => {
             //     if(resp.status === 200) {
             //         this.listInfo = resp.data;
@@ -32,18 +32,18 @@ export default {
             // });
 
             let randomNum = Math.floor(Math.random() * 4 + 1);
-            this.$store.dispatch("refreshList", randomNum).then(resp => {
-                if(resp.data.status === 'success') {
-                    this.listInfo = resp.data.message;
-                }
-            });
+            let rtn = await this.$store.dispatch("refreshList", randomNum);
+
+            if(rtn.status === 200) {
+                this.listInfo = rtn.data.message;
+            }
         },
-        async refreshList() {
-            await this.getList();
+        refreshList() {
+            this.getList();
         },
     },
-    async mounted() {
-        await this.getList();
+    mounted() {
+        this.getList();
     },
 }
 </script>
