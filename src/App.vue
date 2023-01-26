@@ -24,7 +24,7 @@ export default {
     name: 'App',
     data() {
         return {
-            dynamicRouter: 'vue-router Sample',
+            dynamicRouter: 'vue-router-Sample',
             clock: {
                 interval: null,
                 time: null,

@@ -26,12 +26,16 @@
  * app.provide('$axios', axios);
  * 사용할 라이브러리는 컴포넌트 내에서 inject import 후 provide 함수로 명시한 key 값으로 의존성 inject
  * */
-import {inject, ref, reactive, onMounted} from "vue";
+import {inject, ref, reactive, onMounted, watch} from "vue";
 import {fnSample} from "@/utils/composition_test"
 
 export default {
     name: "JsonServer2",
     setup() {
+        /**
+         * ref => 모든 데이터 형에 적용 가능, 변수명.value 로 접근
+         * reactive => object, array 이외 사용 불가, 변수명.field 로 접근
+         */
         const $axios = inject('$axios');
         let url = `http://localhost:3000`;
         let list = ref([]);
@@ -40,12 +44,8 @@ export default {
         let exportFn_data = ref(fnSample(100,2));
 
         /**
-         * ref => 모든 데이터 형에 적용 가능, 변수명.value 로 접근
-         * reactive => object, array 이외 사용 불가, 변수명.field 로 접근
-         * */
-
-
-
+         *  Methods Start
+         */
         const getList  = async () => {
             let rtn = await $axios.get(`${url}/sample`);
 
@@ -100,59 +100,29 @@ export default {
                 await getList();
             }
         };
+        /**
+         *  Methods End
+         */
 
+        /**
+         *  onMounted Hook
+         */
         onMounted(() => {
             getList();
         });
 
+        /**
+         *  watch
+         * */
+        watch(() => list.value, (newValue, oldValue) => {
+            console.log('list Changed ---- ', {newValue, oldValue})
+        }, {deep: true, immediate: true})
+        watch(() => ref_data.value, (newValue, oldValue) => {
+            console.log('ref_data Changed ---- ', {newValue, oldValue})
+        })
+
         return { url, list, getList, add, patch, remove, ref_data, reactive_data, exportFn_data };
     }
-
-    // data() {
-    //     return {
-    //         url: `http://localhost:3000`,
-    //         list: [],
-    //     }
-    // },
-    // methods: {
-    //     async getList() {
-    //         let rtn = await this.$axios.get(`${this.url}/sample`);
-    //
-    //         if(rtn.status === 200) {
-    //             this.list = rtn.data;
-    //         }
-    //     },
-    //     async add() {
-    //         let data = {
-    //             id: this.list.length+1,
-    //             name: `sample${this.list.length+1}`
-    //         }
-    //         await this.$axios.post(`${this.url}/sample`, data);
-    //
-    //         await this.getList();
-    //     },
-    //     async patch() {
-    //         let data = {
-    //             desc: "patch"
-    //         }
-    //
-    //         await this.$axios.patch(`${this.url}/sample/${this.list.length}`, data);
-    //
-    //         await this.getList();
-    //     },
-    //     async remove() {
-    //         if(this.list.length === 0) {
-    //             alert("No Data")
-    //         } else {
-    //             await this.$axios.delete(`${this.url}/sample/${this.list.length}`);
-    //
-    //             await this.getList();
-    //         }
-    //     }
-    // },
-    // async mounted() {
-    //     await this.getList();
-    // }
 }
 </script>
 
