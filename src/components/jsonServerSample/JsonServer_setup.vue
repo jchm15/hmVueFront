@@ -5,6 +5,7 @@
         <button @click="patch">Modify Data</button>
         <button @click="remove" :disabled="list.length === 0">Remove Data</button>
 
+        <p>{{ computed_test }}</p>
         <p>{{ ref_data }}</p>
         <p>{{ reactive_data.value }}</p>
 
@@ -26,7 +27,7 @@
  * app.provide('$axios', axios);
  * 사용할 라이브러리는 컴포넌트 내에서 inject import 후 provide 함수로 명시한 key 값으로 의존성 inject
  * */
-import {inject, ref, reactive, onMounted, watch} from "vue";
+import {inject, ref, reactive, onMounted, watch, computed} from "vue";
 import {fnSample} from "@/utils/composition_test"
 
 export default {
@@ -76,10 +77,15 @@ export default {
             }
 
             try {
+                if(list.value.length === 0) {
+                    alert("No Data")
+                    return;
+                }
                 await $axios.patch(`${url}/sample/${list.value.length}`, data);
                 ref_data.value = "Execute Patch"
                 reactive_data.value = "Complete Patch";
             } catch (e){
+                console.log(e);
                 alert("patch error")
             }
             await getList();
@@ -105,6 +111,12 @@ export default {
          */
 
         /**
+         * computed
+         */
+        const computed_test = computed(() => `length : ${list.value.length}`);
+
+
+        /**
          *  onMounted Hook
          */
         onMounted(() => {
@@ -121,7 +133,7 @@ export default {
             console.log('ref_data Changed ---- ', {newValue, oldValue})
         })
 
-        return { url, list, getList, add, patch, remove, ref_data, reactive_data, exportFn_data };
+        return { url, list, getList, add, patch, remove, ref_data, reactive_data, exportFn_data, computed_test };
     }
 }
 </script>
