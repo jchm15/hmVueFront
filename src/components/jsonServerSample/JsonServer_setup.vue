@@ -50,6 +50,8 @@ export default {
         const getList  = async () => {
             let rtn = await $axios.get(`${url}/sample`);
 
+            let servlet = await $axios.get(`/v1/first`);
+            console.log(servlet)
             if(rtn.status === 200) {
                 list.value = rtn.data;
             }
@@ -62,6 +64,10 @@ export default {
             }
             try {
                 await $axios.post(`${url}/sample`, data);
+
+                //axios post 메소드는 두번째 파라미터를 null로 지정 후 호출 한다.
+                await $axios.post(`/v1/insert`, null, {params: data});
+
                 ref_data.value = "Execute Add"
                 reactive_data.value = "Complete Add";
             } catch(e) {
