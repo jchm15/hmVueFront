@@ -48,13 +48,13 @@ export default {
          *  Methods Start
          */
         const getList  = async () => {
-            let rtn = await $axios.get(`${url}/sample`);
+            // let rtn = await $axios.get(`${url}/sample`);
 
-            let servlet = await $axios.get(`/v1/first`);
+            let servlet = await $axios.get("/v1/sample");
             console.log(servlet)
-            if(rtn.status === 200) {
-                list.value = rtn.data;
-            }
+            // if(rtn.status === 200) {
+            //     list.value = rtn.data;
+            // }
         };
 
         const add = async () => {
