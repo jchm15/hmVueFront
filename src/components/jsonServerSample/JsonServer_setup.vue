@@ -38,6 +38,7 @@ export default {
          * reactive => object, array 이외 사용 불가, 변수명.field 로 접근
          */
         const $axios = inject('$axios');
+        const $dayjs = inject('$dayjs');
         let url = `http://localhost:3000`;
         let list = ref([]);
         let ref_data = ref('');
@@ -48,26 +49,28 @@ export default {
          *  Methods Start
          */
         const getList  = async () => {
-            // let rtn = await $axios.get(`${url}/sample`);
+            let rtn = await $axios.get(`${url}/sample`);
 
-            let servlet = await $axios.get("/v1/sample");
+            let servlet = await $axios.get("/v1/select");
             console.log(servlet)
-            // if(rtn.status === 200) {
-            //     list.value = rtn.data;
-            // }
+            if(rtn.status === 200) {
+                list.value = rtn.data;
+            }
         };
 
         const add = async () => {
             let data = {
-                id: list.value.length+1,
-                name: `sample${list.value.length+1}`
+                // id: list.value.length+1,
+                // name: `sample${list.value.length+1}`,
+                "mmbr_id": list.value.length+1,
+                "mmbr_pwd": `test_${list.value.length+1}`,
+                "mmbr_nm": `tese_${list.value.length+1}`
             }
             try {
                 await $axios.post(`${url}/sample`, data);
 
-                //axios post 메소드는 두번째 파라미터를 null로 지정 후 호출 한다.
-                await $axios.post(`/v1/insert`, null, {params: data});
-
+                let rtn = await $axios.post(`/v1/insert`, data);
+                console.log("insert --- ", rtn)
                 ref_data.value = "Execute Add"
                 reactive_data.value = "Complete Add";
             } catch(e) {

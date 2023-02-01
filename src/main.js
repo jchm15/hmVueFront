@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import App from '@/App.vue'
 
 import axios from "axios";
+axios.defaults.headers.get['Content-Type'] = 'application/json';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 import dayjs from "dayjs";
 /**
@@ -21,6 +23,7 @@ const app = createApp(App);
  * Composition API
  * */
 app.provide('$axios', axios);
+app.provide('$dayjs', dayjs);
 
 /**
  * 전역변수 화
