@@ -2,16 +2,30 @@
     <div>
         <h1>Composition API</h1>
         <button @click="add">Add Data</button>
-        <button @click="patch">Modify Data</button>
-        <button @click="remove" :disabled="list.length === 0">Remove Data</button>
+<!--        <button @click="patch">Modify Data</button>-->
+<!--        <button @click="remove" :disabled="list.length === 0">Remove Data</button>-->
 
         <p>{{ computed_test }}</p>
         <p>{{ ref_data }}</p>
         <p>{{ reactive_data.value }}</p>
 
         <template v-if="list.length">
-            <div v-for="(item, index) in list" :key="index">
-                <span>Id : {{ item.id }}  |  Name : {{ item.name }}  {{ item.desc ? `  |  Desc : ${item.desc}` : '' }}</span>
+            <div class="table_section">
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr v-for="(item, index) in list" :key="index">
+                        <td>{{ item.mmbr_id }}</td>
+                        <td>{{ item.mmbr_nm }}</td>
+                        <td>
+                            <button @click="updMember(item.mmbr_id)">Modify</button>
+                            <button @click="delMember(item.mmbr_id)">Delete</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </template>
         <template v-else>
@@ -49,10 +63,9 @@ export default {
          *  Methods Start
          */
         const getList  = async () => {
-            let rtn = await $axios.get(`${url}/sample`);
+            // let rtn = await $axios.get(`${url}/sample`);
 
-            let servlet = await $axios.get("/v1/select");
-            console.log(servlet)
+            let rtn = await $axios.get("/v1/select");
             if(rtn.status === 200) {
                 list.value = rtn.data;
             }
@@ -64,57 +77,48 @@ export default {
                 // name: `sample${list.value.length+1}`,
                 "mmbr_id": list.value.length+1,
                 "mmbr_pwd": `test_${list.value.length+1}`,
-                "mmbr_nm": `tese_${list.value.length+1}`
+                "mmbr_nm": `test_${list.value.length+1}`
             }
-            try {
-                await $axios.post(`${url}/sample`, data);
+            // await $axios.post(`${url}/sample`, data);
 
-                let rtn = await $axios.post(`/v1/insert`, data);
-                console.log("insert --- ", rtn)
-                ref_data.value = "Execute Add"
-                reactive_data.value = "Complete Add";
-            } catch(e) {
-                alert("add error")
-            }
+
+            await $axios.post(`/v1/insert`, data);
+            ref_data.value = "Execute Add"
+            reactive_data.value = "Complete Add";
 
             await getList();
         };
 
-        const patch = async () => {
+        const delMember = async (params) => {
             let data = {
-                desc: "patch"
+                "mmbr_id": params
             }
 
             try {
-                if(list.value.length === 0) {
-                    alert("No Data")
-                    return;
-                }
-                await $axios.patch(`${url}/sample/${list.value.length}`, data);
-                ref_data.value = "Execute Patch"
-                reactive_data.value = "Complete Patch";
-            } catch (e){
-                console.log(e);
-                alert("patch error")
+                await $axios.post(`/v1/delete`, data);
+                ref_data.value = "Execute Delete"
+                reactive_data.value = "Complete Delete";
+            } catch(e) {
+                alert("remove error")
             }
+
             await getList();
-        };
+        }
 
-        const remove = async () => {
-            if (list.value.length === 0) {
-                alert("No Data")
-            } else {
-                try {
-                    await $axios.delete(`${url}/sample/${list.value.length}`);
-                    ref_data.value = "Execute Remove"
-                    reactive_data.value = "Complete Remove";
-                } catch(e) {
-                    alert("remove error")
-                }
-
-                await getList();
+        const updMember = async (params) => {
+            let data = {
+                "mmbr_id": params
             }
-        };
+            try {
+                await $axios.post(`/v1/update`, data);
+                ref_data.value = "Execute Update"
+                reactive_data.value = "Complete Update";
+            } catch(e) {
+                alert("update error")
+            }
+
+            await getList();
+        }
         /**
          *  Methods End
          */
@@ -136,13 +140,13 @@ export default {
          *  watch
          * */
         watch(() => list.value, (newValue, oldValue) => {
-            console.log('list Changed ---- ', {newValue, oldValue})
+            // console.log('list Changed ---- ', {newValue, oldValue})
         }, {deep: true, immediate: true})
         watch(() => ref_data.value, (newValue, oldValue) => {
-            console.log('ref_data Changed ---- ', {newValue, oldValue})
+            // console.log('ref_data Changed ---- ', {newValue, oldValue})
         })
 
-        return { url, list, getList, add, patch, remove, ref_data, reactive_data, exportFn_data, computed_test };
+        return { url, list, getList, add, ref_data, reactive_data, exportFn_data, computed_test, delMember, updMember };
     }
 }
 </script>
@@ -150,5 +154,19 @@ export default {
 <style scoped>
 button {
     margin: 20px;
+}
+
+.table_section {
+    width:100%;
+}
+
+.table {
+    margin: auto;
+    border: #2c3e50 solid 1px;
+}
+th, td {
+    border: 1px solid #444444;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 </style>
