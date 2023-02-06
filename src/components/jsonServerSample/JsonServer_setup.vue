@@ -32,7 +32,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
 /**
  * ---inject---
  * composition API 사용 시 main.js에서 라이브러리를 provide 함수로 (key: value) 형식으로 명시하여 제공
@@ -40,106 +40,94 @@
  * 사용할 라이브러리는 컴포넌트 내에서 inject import 후 provide 함수로 명시한 key 값으로 의존성 inject
  * */
 import {inject, ref, reactive, onMounted, watch, computed} from "vue";
-import {fnSample} from "@/utils/composition_test"
 
-export default {
-    name: "JsonServer2",
-    setup() {
-        /**
-         * ref => 모든 데이터 형에 적용 가능, 변수명.value 로 접근
-         * reactive => object, array 이외 사용 불가, 변수명.field 로 접근
-         */
-        const $axios = inject('$axios');
-        const $dayjs = inject('$dayjs');
-        let url = `http://localhost:3000`;
-        let list = ref([]);
-        let ref_data = ref('');
-        let reactive_data = reactive({});
-        let exportFn_data = ref(fnSample(100,2));
+/**
+ * ref => 모든 데이터 형에 적용 가능, 변수명.value 로 접근
+ * reactive => object, array 이외 사용 불가, 변수명.field 로 접근
+ */
+const $axios = inject('$axios');
+const $dayjs = inject('$dayjs');
+let url = `http://localhost:3000`;
+let list = ref([]);
+let ref_data = ref('');
+let reactive_data = reactive({});
 
-        /**
-         *  Methods Start
-         */
-        const getList  = async () => {
-            let rtn = await $axios.get("/v1/select");
-            if(rtn.status === 200) {
-                list.value = rtn.data;
-            }
-        };
-
-        const add = async () => {
-            let data = {
-                "mmbr_id": list.value.length+1,
-                "mmbr_pwd": `test_${list.value.length+1}`,
-                "mmbr_nm": `test_${list.value.length+1}`
-            }
-            await $axios.post(`/v1/insert`, data);
-            ref_data.value = "Execute Add"
-            reactive_data.value = "Complete Add";
-
-            await getList();
-        };
-
-        const delMember = async (params) => {
-            let data = {
-                "mmbr_id": params
-            }
-
-            try {
-                await $axios.post(`/v1/delete`, data);
-                ref_data.value = "Execute Delete"
-                reactive_data.value = "Complete Delete";
-            } catch(e) {
-                alert("remove error")
-            }
-
-            await getList();
-        }
-
-        const updMember = async (params) => {
-            let data = {
-                "mmbr_id": params
-            }
-            try {
-                await $axios.post(`/v1/update`, data);
-                ref_data.value = "Execute Update"
-                reactive_data.value = "Complete Update";
-            } catch(e) {
-                alert("update error")
-            }
-
-            await getList();
-        }
-        /**
-         *  Methods End
-         */
-
-        /**
-         * computed
-         */
-        const computed_test = computed(() => `length : ${list.value.length}`);
-
-
-        /**
-         *  onMounted Hook
-         */
-        onMounted(() => {
-            getList();
-        });
-
-        /**
-         *  watch
-         * */
-        watch(() => list.value, (newValue, oldValue) => {
-            // console.log('list Changed ---- ', {newValue, oldValue})
-        }, {deep: true, immediate: true})
-        watch(() => ref_data.value, (newValue, oldValue) => {
-            // console.log('ref_data Changed ---- ', {newValue, oldValue})
-        })
-
-        return { url, list, getList, add, ref_data, reactive_data, exportFn_data, computed_test, delMember, updMember };
+/**
+ *  Methods
+ */
+const getList  = async () => {
+    let rtn = await $axios.get("/v1/select");
+    if(rtn.status === 200) {
+        list.value = rtn.data;
     }
+};
+
+const add = async () => {
+    let data = {
+        "mmbr_id": list.value.length+1,
+        "mmbr_pwd": `test_${list.value.length+1}`,
+        "mmbr_nm": `test_${list.value.length+1}`
+    }
+    await $axios.post(`/v1/insert`, data);
+    ref_data.value = "Execute Add"
+    reactive_data.value = "Complete Add";
+
+    await getList();
+};
+
+const delMember = async (params) => {
+    let data = {
+        "mmbr_id": params
+    }
+
+    try {
+        await $axios.post(`/v1/delete`, data);
+        ref_data.value = "Execute Delete"
+        reactive_data.value = "Complete Delete";
+    } catch(e) {
+        alert("remove error")
+    }
+
+    await getList();
 }
+
+const updMember = async (params) => {
+    let data = {
+        "mmbr_id": params
+    }
+    try {
+        await $axios.post(`/v1/update`, data);
+        ref_data.value = "Execute Update"
+        reactive_data.value = "Complete Update";
+    } catch(e) {
+        alert("update error")
+    }
+
+    await getList();
+}
+
+/**
+ * computed
+ */
+const computed_test = computed(() => `length : ${list.value.length}`);
+
+
+/**
+ *  onMounted Hook
+ */
+onMounted(() => {
+    getList();
+});
+
+/**
+ *  watch
+ * */
+watch(() => list.value, (newValue, oldValue) => {
+    // console.log('list Changed ---- ', {newValue, oldValue})
+}, {deep: true, immediate: true})
+watch(() => ref_data.value, (newValue, oldValue) => {
+    // console.log('ref_data Changed ---- ', {newValue, oldValue})
+})
 </script>
 
 <style scoped>
