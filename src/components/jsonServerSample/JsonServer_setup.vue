@@ -2,8 +2,6 @@
     <div>
         <h1>Composition API</h1>
         <button @click="add">Add Data</button>
-<!--        <button @click="patch">Modify Data</button>-->
-<!--        <button @click="remove" :disabled="list.length === 0">Remove Data</button>-->
 
         <p>{{ computed_test }}</p>
         <p>{{ ref_data }}</p>
@@ -63,8 +61,6 @@ export default {
          *  Methods Start
          */
         const getList  = async () => {
-            // let rtn = await $axios.get(`${url}/sample`);
-
             let rtn = await $axios.get("/v1/select");
             if(rtn.status === 200) {
                 list.value = rtn.data;
@@ -73,15 +69,10 @@ export default {
 
         const add = async () => {
             let data = {
-                // id: list.value.length+1,
-                // name: `sample${list.value.length+1}`,
                 "mmbr_id": list.value.length+1,
                 "mmbr_pwd": `test_${list.value.length+1}`,
                 "mmbr_nm": `test_${list.value.length+1}`
             }
-            // await $axios.post(`${url}/sample`, data);
-
-
             await $axios.post(`/v1/insert`, data);
             ref_data.value = "Execute Add"
             reactive_data.value = "Complete Add";
