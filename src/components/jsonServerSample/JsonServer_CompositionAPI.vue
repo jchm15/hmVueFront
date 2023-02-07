@@ -32,6 +32,10 @@
     </div>
 </template>
 
+
+<!--
+    composition API는 Components import 시 컴포넌트 명 대문자로 지정
+-->
 <script setup>
 /**
  * ---inject---

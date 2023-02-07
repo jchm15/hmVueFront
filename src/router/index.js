@@ -10,7 +10,7 @@ import Computed from "@/components/ComputedSample.vue";
 import Watch from "@/components/WatchSample.vue";
 import Bind from '@/components/DynamicBinding.vue';
 import JsonServer from '@/components/jsonServerSample/JsonServer.vue';
-import JsonServer2 from '@/components/jsonServerSample/JsonServer_setup.vue';
+import JsonServer2 from '@/components/jsonServerSample/JsonServer_CompositionAPI.vue';
 import Error from '@/components/ErrorSample.vue';
 
 const routes = [
